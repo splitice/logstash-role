@@ -23,31 +23,30 @@ Example Playbooks
       logstash_defaults: |
         LS_USER=root
         LS_HEAP_SIZE="256m"
+        LS_OPTS="--auto-reload --reload-interval 2"
 
-     logstash_inputs: |
-       syslog { host => "{{ ansible_eth0.ipv4.address }}"
+      logstash_inputs: |
+        syslog { host => "{{ ansible_eth0.ipv4.address }}"
                 port => "514"
                 type => "syslog_input"
               }
 
-       syslog { host => "{{ ansible_lo.ipv4.address }}"
+        syslog { host => "{{ ansible_lo.ipv4.address }}"
                 port => "515"
                 type => "syslog_input_local"
               }
 
-     logstash_filters: |
-       geoip { source => "ip_address" 
+      logstash_filters: |
+        geoip { source => "ip_address"
              }
- 
-       multiline { pattern => "^No lfn2pfn"
+
+        multiline { pattern => "^No lfn2pfn"
                    what => "previous"
                  }
 
-     logstash_outputs: |
-       file { path => "/var/log/logstash/output.log"
+      logstash_outputs: |
+        file { path => "/var/log/logstash/output.log"
             }
-
-      tags: logstash
 ```
 
 Role Variables
