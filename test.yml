@@ -2,10 +2,10 @@
   become: yes
   roles:
     - role: logstash-role
-      logstash_version: "1.5"
       logstash_defaults: |
         LS_USER=root
         LS_HEAP_SIZE="256m"
+        LS_OPTS="--auto-reload --reload-interval 2"
       
       logstash_inputs: |
         file {
@@ -17,5 +17,3 @@
 
       logstash_outputs: |
         # dummy
-
-      tags: logstash
