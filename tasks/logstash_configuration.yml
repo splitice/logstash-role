@@ -6,7 +6,6 @@
             group=root
             mode=0644
             validate='/opt/logstash/bin/logstash -tf %s'
-  tags: logstash_inputs
 
 - name: Validate and copy Logstash Filter Configuration
   template: src=filters.conf.j2
@@ -15,7 +14,6 @@
             group=root
             mode=0644
             validate='/opt/logstash/bin/logstash -tf %s'
-  tags: logstash_filters
 
 - name: Validate and copy Logstash Output Configuration
   template: src=output.conf.j2
@@ -24,4 +22,3 @@
             group=root
             mode=0644
             validate='/opt/logstash/bin/logstash -tf %s'
-  tags: logstash_outputs
