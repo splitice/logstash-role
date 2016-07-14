@@ -18,6 +18,7 @@
 - name: Add Logstash Repo Key
   rpm_key: key="{{ logstash_repo_key }}" 
            state=present
+  tags: logstash_repo
 
 - name: Install Logstash
   yum: name=logstash
@@ -25,6 +26,12 @@
        update_cache=yes
   notify: 
    - start logstash
+  tags: logstash_install
+
+- name: Install Logstash Plugins
+  shell: /opt/logstash/bin/plugin install {{item}}
+  with_items: "{{ logstash_plugins }}"
+  tags: logstash_install
 
 - name: Configure default settings for Logstash
   template: src=defaults.conf.j2

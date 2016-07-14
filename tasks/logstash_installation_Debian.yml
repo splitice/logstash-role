@@ -22,8 +22,13 @@
   apt: pkg=logstash
        update_cache=yes
        state=latest
-  notify: 
-   - start logstash
+       state="{{logstash_install_state}}"
+  tags: logstash_install
+
+- name: Install Logstash Plugins
+  shell: /opt/logstash/bin/plugin install {{item}}
+  with_items: "{{ logstash_plugins }}"
+  tags: logstash_install
 
 - name: Configure default settings for Logstash
   template: src=defaults.conf.j2
